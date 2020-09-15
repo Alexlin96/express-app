@@ -50,7 +50,7 @@ app.use(expressJWT({
   algorithms: ['HS256']
 }).unless({
   // 除了这些地址其他的需要验证 '/user/editUser'
-  path: ['/user/login', '/user/addUser']
+  path: ['/user/login', '/user/addUser', '/user', '/user/editUser']
 }))
 
 // 路由注册

@@ -53,7 +53,8 @@ class userDao {
             reject('该用户不存在')
             return
           } else {
-            connection.query(sql.update, [param.password, param.phone, param.role, param.sex, param.name], (error, result) => {
+            connection.query(sql.update, [param.name,param.password, param.phone, param.role, param.sex, param.uid], (error, result) => {
+              console.log('error', error)
               if (error) {
                 reject('操作失败')
                 return

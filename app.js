@@ -44,12 +44,12 @@ app.use(function (req, res, next) {
   reqDomain.run(next);
 })
 
-// token验证
+// token验证  authorization: Bearer +token
 app.use(expressJWT({
   secret: require('./conf/common').SECRET_KEY,
   algorithms: ['HS256']
 }).unless({
-  // 除了这些地址其他的需要验证 '/user/editUser'
+  // 除了这些地址其他的需要验证 '/user/editUser' /^\/static\/.*/
   path: ['/user/login', '/user/addUser', '/user', '/user/editUser']
 }))
 

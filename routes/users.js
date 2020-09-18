@@ -65,5 +65,41 @@ router.post('/login', async(req, res, next) => {
   }
 })
 
+// 获取当前用户信息
+router.get('/userInfo', async(req, res, next) => {
+  try {
+    let resData = await userDao.userInfo(req, res, next)
+    resData.password = '********'
+    res.json({
+      code: 200,
+      msg: '成功',
+      data: resData
+    })
+  } catch (err) {
+    res.json({
+      code: 500,
+      msg: err,
+      data: null
+    })
+  }
+})
+
+// 退出登录
+router.get('/logout', async(req, res, next) => {
+  try {
+    let resData = await userDao.logout(req, res, next)
+    res.json({
+      code: 200,
+      msg: '成功',
+      data: resData
+    })
+  } catch (err) {
+    res.json({
+      code: 500,
+      msg: err,
+      data: null
+    })
+  }
+})
 
 module.exports = router;

@@ -45,7 +45,7 @@ class userDao {
           return
         }
         let param = req.body
-        connection.query(sql.queryUserName, param.name, (error, result) => {
+        connection.query(sql.queryUser, param.uid, (error, result) => {
           if (error) {
             reject('操作失败')
             return
@@ -54,7 +54,6 @@ class userDao {
             return
           } else {
             connection.query(sql.update, [param.name,param.password, param.phone, param.role, param.sex, param.uid], (error, result) => {
-              console.log('error', error)
               if (error) {
                 reject('操作失败')
                 return
@@ -96,6 +95,26 @@ class userDao {
             }
           }
         })
+      })
+    })
+  }
+  userInfo(req, res, next) {
+    return new Promise((resolve, reject) => {
+      const token = req.headers.authorization.replace('Bearer ', '')
+      jsonWebToken.verify(token, require('../conf/common').SECRET_KEY, function (err, data) { // 解析token
+        if (!err){ //解析成功
+          resolve(data)
+        } else {
+          reject('token 无效')
+        }
+      })
+    })
+  }
+  logout(req, res, next) {
+    return new Promise((resolve, reject) => {
+      const token = req.headers.authorization.replace('Bearer ', '')
+      jsonWebToken.verify(token, require('../conf/common').SECRET_KEY, function (err, data) { // 解析token
+        resolve('退出登录成功')
       })
     })
   }

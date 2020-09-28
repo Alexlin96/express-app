@@ -102,4 +102,41 @@ router.get('/logout', async(req, res, next) => {
   }
 })
 
+// 获取所有用户信息列表
+router.get('/userList', async(req, res, next) => {
+  try {
+    let resData = await userDao.getUserList(req, res, next)
+    res.json({
+      code: 200,
+      msg: '成功',
+      data: resData
+    })
+  } catch (err) {
+    res.json({
+      code: 500,
+      msg: err,
+      data: null
+    })
+  }
+})
+
+// 删除用户
+router.post('/delUser', async(req, res, next) => {
+  try {
+    let resData = await userDao.delete(req, res, next)
+    res.json({
+      code: resData.code,
+      msg: resData.msg || '成功',
+      data: resData.data
+    })
+  } catch (err) {
+    res.json({
+      code: 500,
+      msg: err,
+      data: null
+    })
+  }
+})
+
+
 module.exports = router;

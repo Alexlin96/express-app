@@ -9,5 +9,7 @@ module.exports = {
   insert: 'insert into user(name, password, phone, role, sex) VALUES(?,?,?,?,?)',
   queryUser:'select * from user where uid=?',
   queryUserName:'select * from user where name=?',
-  update: 'update user set name=?, password=?, phone=?, role=?, sex=? where uid=?'
+  update: 'update user set name=?, password=?, phone=?, role=?, sex=? where uid=?',
+  queryUserList: 'select * from user',
+  deleteUser: 'delete from user where uid=?'
 }

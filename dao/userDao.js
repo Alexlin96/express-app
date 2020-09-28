@@ -98,6 +98,37 @@ class userDao {
       })
     })
   }
+  delete(req, res, next) {
+    return new Promise((resolve, reject) => {
+      const token = req.headers.authorization.replace('Bearer ', '')
+      jsonWebToken.verify(token, require('../conf/common').SECRET_KEY, function (err, data) { // 解析token
+        if (data.role === 'admin') {
+          pool.getConnection((err, connection) => {
+            if (err) {
+              reject('操作失败')
+            }
+            connection.query(sql.deleteUser, data.uid, (error, result) => {
+              if (error) {
+                reject('操作失败')
+              } else {
+                resolve({
+                  code: 200,
+                  msg: '删除成功',
+                  data: null
+                })
+              }
+            })
+          })
+        } else {
+          resolve({
+            code: 403,
+            msg: '无权限删除该账号',
+            data: null
+          })
+        }
+      })
+    })
+  }
   userInfo(req, res, next) {
     return new Promise((resolve, reject) => {
       const token = req.headers.authorization.replace('Bearer ', '')
@@ -115,6 +146,25 @@ class userDao {
       const token = req.headers.authorization.replace('Bearer ', '')
       jsonWebToken.verify(token, require('../conf/common').SECRET_KEY, function (err, data) { // 解析token
         resolve('退出登录成功')
+      })
+    })
+  }
+  getUserList(req, res, next) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection((err, connection) => {
+        if (err) {
+          reject('操作失败')
+          return
+        }
+        connection.query(sql.queryUserList, (error, result) => {
+          if (error) {
+            reject('操作失败')
+            return
+          } else {
+            resolve(result)
+          }
+          connection.release();
+        })
       })
     })
   }

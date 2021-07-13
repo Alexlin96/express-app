@@ -9,6 +9,7 @@ var cors = require('cors');
 var expressJWT = require('express-jwt');
 
 var usersRouter = require('./routes/users');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use(expressJWT({
 
 // 路由注册
 app.use('/user', usersRouter);
+app.use('/api', apiRouter)
 
 
 // 捕获404错误

@@ -138,5 +138,10 @@ router.post('/delUser', async(req, res, next) => {
   }
 })
 
+router.get('/callback', function(req, res, next) {
+  // res.json('测试用户接口连接成功');
+  res.redirect('https://test-am.goatgames.com/#/account/toutiao')
+})
+
 
 module.exports = router;

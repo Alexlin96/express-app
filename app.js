@@ -51,12 +51,13 @@ app.use(expressJWT({
   algorithms: ['HS256']
 }).unless({
   // 除了这些地址其他的需要验证 '/user/editUser' /^\/static\/.*/
-  path: ['/user/login', '/user/addUser', '/user', '/user/editUser']
+  path: ['/user/login', '/user/addUser', '/user', '/user/editUser', '/toutiaoPermission/callback']
 }))
 
 // 路由注册
 app.use('/user', usersRouter);
 app.use('/api', apiRouter)
+app.use('/toutiaoPermission', usersRouter);
 
 
 // 捕获404错误
